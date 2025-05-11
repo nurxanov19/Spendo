@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Enter Your Verification Code</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <label for="sms_code">Enter the SMS code:</label>
+    <input type="text" name="sms_code" id="sms_code" required>
+    <button type="submit">Verify</button>
+</form>
+
+  {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock %}

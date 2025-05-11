@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker - {% block title %}{% endblock %}</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+    <!-- Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="font-poppins bg-gray-100 relative overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">Expense Tracker</a>
+            <div class="space-x-4">
+                <a href="{% url 'main' %}" class="hover:text-yellow-300 transition">Home</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' request.user.username %}" class="hover:text-yellow-300 transition">Profile</a>
+                <a href="{% url 'reports' %}" class="hover:text-yellow-300 transition">Reports</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="container mx-auto p-6">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- Custom JS -->
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<div class="animate__animated animate__fadeIn">
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">Reports</h1>
+    <!-- Date Range Filter -->
+    <div class="mb-6 flex space-x-4">
+        <button onclick="filterReports('7days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '7days' %}bg-blue-700{% endif %}">Last 7 Days</button>
+        <button onclick="filterReports('30days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '30days' %}bg-blue-700{% endif %}">Last 30 Days</button>
+        <button onclick="filterReports('90days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '90days' %}bg-blue-700{% endif %}">Last 90 Days</button>
+    </div>
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">Income vs Expenses (Bar)</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">Expense Breakdown (Pie)</h2>
+            <canvas id="expensePieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js and Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Filter function
+    function filterReports(range) {
+        window.location.href = `{% url 'reports' %}?range=${range}`;
+    }
+
+    // Bar Chart
+    const barChartData = {{ bar_chart_data|safe }};
+    const barChart = new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: barChartData.labels,
+            datasets: [{
+                label: 'Amount',
+                data: barChartData.data,
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)', // Income
+                    'rgba(255, 99, 132, 0.2)'  // Expenses
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            },
+            responsive: true
+        }
+    });
+
+    // Pie Chart
+    const pieChartData = {{ pie_chart_data|safe }};
+    const expensePieChart = new Chart(document.getElementById('expensePieChart'), {
+        type: 'pie',
+        data: {
+            labels: pieChartData.labels,
+            datasets: [{
+                data: pieChartData.data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>
+{% endblock %}

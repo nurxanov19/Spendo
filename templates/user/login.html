@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<!-- Animated Floating Coins Background -->
+<div class="floating-coins"></div>
+<!-- Form Container -->
+<div class="animate__animated animate__fadeIn animate__slideInUp max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg mt-8">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">
+        <i class="fas fa-sign-in-alt mr-2 text-green-500"></i> Login
+    </h2>
+    <form method="POST" novalidate class="space-y-6">
+        {% csrf_token %}
+        <!-- Form Fields -->
+        {% for field in form %}
+        <div>
+            <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                {% if field.label == "Username" %}Identifier{% else %}{{ field.label }}{% endif %}
+                {% if field.field.required %}
+                <span class="text-red-500">*</span>
+                {% endif %}
+            </label>
+            <div class="relative">
+                {% if field.label == "Username" %}
+                <i class="fas fa-user-circle absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                {% elif field.label == "Password" %}
+                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                {% endif %}
+                {{ field }}
+            </div>
+            {% if field.label == "Username" %}
+            <p class="text-sm text-gray-500 mt-1">Enter your email or phone number.</p>
+            {% endif %}
+            {% if field.errors %}
+            <p class="text-red-500 text-sm mt-1">{{ field.errors.as_text }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <!-- Submit Button -->
+        <div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 hover:scale-105 transition transform flex items-center justify-center">
+                <i class="fas fa-sign-in-alt mr-2"></i> Login
+            </button>
+        </div>
+    </form>
+    <!-- Register Link -->
+    <p class="text-center text-gray-600 mt-4">
+        Don't have an account? <a href="{% url 'register' %}" class="text-blue-500 hover:text-blue-700 hover:underline">Register</a>
+    </p>
+</div>
+{% endblock %}

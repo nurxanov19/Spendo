@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<!-- Animated Floating Coins Background -->
+<div class="floating-coins"></div>
+<!-- Page Content -->
+<div class="animate__animated animate__fadeIn">
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">Dashboard</h1>
+
+    <!-- Account Balances -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+            <h2 class="text-lg font-semibold text-green-600"><i class="fas fa-wallet mr-2"></i> Total Balance</h2>
+            <p class="text-2xl font-bold text-gray-800">${{ total_balance|floatformat:2 }}</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+            <h2 class="text-lg font-semibold text-blue-600"><i class="fas fa-arrow-up mr-2"></i> Income</h2>
+            <p class="text-2xl font-bold text-gray-800">${{ total_income|floatformat:2 }}</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+            <h2 class="text-lg font-semibold text-red-600"><i class="fas fa-arrow-down mr-2"></i> Expenses</h2>
+            <p class="text-2xl font-bold text-gray-800">${{ total_expense|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="flex space-x-4 mb-6">
+        <button onclick="openModal('income-modal')" class="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Add Income
+        </button>
+        <button onclick="openModal('expense-modal')" class="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Add Expense
+        </button>
+        <button onclick="openModal('account-modal')" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Add Account
+        </button>
+    </div>
+
+    <!-- Category Trigger Buttons -->
+    <div class="flex space-x-4 mb-6">
+        <button onclick="openModal('income-category-modal')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Add Income Category
+        </button>
+        <button onclick="openModal('expense-category-modal')" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition transform hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Add Expense Category
+        </button>
+    </div>
+
+    <!-- Income Category Modal -->
+    <div id="income-category-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md animate__animated animate__zoomIn">
+            <h2 class="text-xl font-bold text-green-600 mb-4">Add Income Category</h2>
+            <form method="POST" action="{% url 'add_category' %}" id="income-category-form">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="income">
+                <div class="mb-4">
+                    <label for="id_name" class="block text-gray-700 font-semibold mb-2">Category Name</label>
+                    {{ inc_form.name }}
+                    {{ inc_form.name.errors }}
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="closeModal('income-category-modal')" class="text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Expense Category Modal -->
+    <div id="expense-category-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md animate__animated animate__zoomIn">
+            <h2 class="text-xl font-bold text-red-600 mb-4">Add Expense Category</h2>
+            <form method="POST" action="{% url 'add_category' %}" id="expense-category-form">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="expense">
+                <div class="mb-4">
+                    <label for="id_name" class="block text-gray-700 font-semibold mb-2">Category Name</label>
+                    {{ exp_form.name }}
+                    {{ exp_form.name.errors }}
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="closeModal('expense-category-modal')" class="text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Account Modal -->
+    <div id="account-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md animate__animated animate__zoomIn">
+            <h2 class="text-xl font-bold text-blue-600 mb-4">Add Account</h2>
+            <form method="POST" action="{% url 'add-account' %}" id="account-form">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="{{ form.type_choice.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">Account Type</label>
+                    {{ form.type_choice }}
+                    {{ form.type_choice.errors }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.type.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">Account Name</label>
+                    {{ form.type }}
+                    {{ form.type.errors }}
+                </div>
+                <div class="mb-6">
+                    <label for="{{ form.balance.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">Initial Balance</label>
+                    {{ form.balance }}
+                    {{ form.balance.errors }}
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="closeModal('account-modal')" class="text-gray-600 hover:text-gray-800">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Income and Expense Lists -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">Recent Income</h2>
+            <ul class="space-y-2">
+                {% for inc in income %}
+                <li class="flex justify-between">
+                    <span>{{ inc.type }}</span>
+                    <span class="text-green-600">${{ inc.amount|floatformat:2 }}</span>
+                </li>
+                {% empty %}
+                <li>No income recorded</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-red-600 mb-4">Recent Expenses</h2>
+            <ul class="space-y-2">
+                {% for exp in expense %}
+                <li class="flex justify-between">
+                    <span>{{ exp.type }}</span>
+                    <span class="text-red-600">${{ exp.amount|floatformat:2 }}</span>
+                </li>
+                {% empty %}
+                <li>No expenses recorded</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">Monthly Expenses</h2>
+            <canvas id="expenseChart"></canvas>
+        </div>
+        <divJun 27, 2023            <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">Income vs Expenses</h2>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Income Modal -->
+<div id="income-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-full max-w-md animate__animated animate__zoomIn">
+        <h2 class="text-xl font-bold text-green-600 mb-4">Add Income</h2>
+        <form method="POST" action="{% url 'add_income_expense' %}" id="income-form">
+            {% csrf_token %}
+            {{ income_form.as_p }}
+            <div class="flex justify-end space-x-4">
+                <button type="button" onclick="closeModal('income-modal')" class="text-gray-600 hover:text-gray-800">Cancel</button>
+                <button type="submit" name="income" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Expense Modal -->
+<div id="expense-modal" class="modal hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-full max-w-md animate__animated animate__zoomIn">
+        <h2 class="text-xl font-bold text-red-600 mb-4">Add Expense</h2>
+        <form method="POST" action="{% url 'add_income_expense' %}" id="expense-form">
+            {% csrf_token %}
+            {{ expense_form.as_p }}
+            <div class="flex justify-end space-x-4">
+                <button type="button" onclick="closeModal('expense-modal')" class="text-gray-600 hover:text-gray-800">Cancel</button>
+                <button type="submit" name="expense" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- JSON Data -->
+{{ expense_data|json_script:"expense-data" }}
+
+<!-- Chart.js and Modal Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Modal Functions
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        {% if show_income_modal %}
+            document.getElementById('income-modal').classList.remove('hidden');
+        {% endif %}
+        {% if show_expense_modal %}
+            document.getElementById('expense-modal').classList.remove('hidden');
+        {% endif %}
+    });
+
+    // Get expense data from JSON script
+    const expenseDataRaw = JSON.parse(document.getElementById('expense-data').textContent);
+
+    // Chart Data
+    const expenseData = {
+        labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+            label: 'Expenses',
+            data: expenseDataRaw,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    const pieData = {
+        labels: ['Income', 'Expenses'],
+        datasets: [{
+            data: [{{ total_income }}, {{ total_expense }}],
+            backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+            borderWidth: 1
+        }]
+    };
+
+    // Expense Chart
+    const expenseChart = new Chart(document.getElementById('expenseChart'), {
+        type: 'bar',
+        data: expenseData,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Pie Chart
+    const pieChart = new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: pieData,
+        options: {
+            responsive: true
+        }
+    });
+</script>
+{% endblock %}
