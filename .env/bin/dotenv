@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/258macsbayuz/Desktop/Main Workspace/DjangoProjects/Spendo/.env/bin/python" "$0" "$@"
+'''exec' "/Users/258macsbayuz/Desktop/Main Workspace/DjangoProjects/Spendo/.env/bin/python3.12" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

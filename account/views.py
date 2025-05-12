@@ -153,6 +153,12 @@ class CustomPasswordResetView(View):
                 elif identifier.startswith('+998'):
                     print('Phone number identified, sending SMS code to:', identifier)
                     user = User.objects.get(phone=identifier)
+
+                    uidb64 = urlsafe_base64_encode(str(user.pk).encode())
+                    token = default_token_generator.make_token(user)
+                    request.session['uidb64'] = uidb64
+                    request.session['token'] = token
+
                     code = send_sms_code_to_phone(user.phone)
                     request.session['reset_user_id'] = user.id
                     request.session['sms_code'] = code

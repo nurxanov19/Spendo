@@ -37,8 +37,10 @@ class RegisterForm(forms.ModelForm):
 
         if '@' in self.cleaned_data['identifier']:
             user.email = self.cleaned_data['identifier']
+            user.phone = None
         elif self.cleaned_data['identifier'].startswith('+998' ):
             user.phone = self.cleaned_data['identifier']
+            user.email = None
 
         if commit:
             user.save()

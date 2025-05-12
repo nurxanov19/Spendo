@@ -11,8 +11,14 @@ class AddIncomeForm(forms.ModelForm):
         fields = ['amount', 'account', 'category']
         widgets = {
             'amount': forms.NumberInput(attrs={'placeholder': '$0.00'}),
-
         }
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['account'].queryset = Account.objects.filter(user=user)
+        self.fields['category'].queryset = IncomeCategory.objects.filter(user=user)
+
+
 
 class AddExpenseForm(forms.ModelForm):
     class Meta:
@@ -20,8 +26,14 @@ class AddExpenseForm(forms.ModelForm):
         fields = ['amount', 'account', 'category']
         widgets = {
             'amount': forms.NumberInput(attrs={'placeholder': '$0.00'}),
-
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+        self.fields['account'].queryset = Account.objects.filter(user=user)
+        self.fields['category'].queryset = ExpenseCategory.objects.filter(user=user)
+
 
 
 class AddIncomeCategoryForm(forms.ModelForm):
@@ -29,11 +41,33 @@ class AddIncomeCategoryForm(forms.ModelForm):
         model = IncomeCategory
         fields = ['name',]
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        category = super().save(commit=False)
+        category.user = self.user
+        if commit:
+            category.save()
+        return category
+
 
 class AddExpenseCategoryForm(forms.ModelForm):
     class Meta:
         model = ExpenseCategory
         fields = ['name',]
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        category = super().save(commit=False)
+        category.user = self.user
+        if commit:
+            category.save()
+        return category
 
 
 class AddAccountForm(forms.ModelForm):

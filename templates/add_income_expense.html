@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Add {{ type|title }}{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-bold text-{% if type == 'income' %}green-600{% else %}red-600{% endif %} mb-6">
+        Add {{ type|title }}
+    </h1>
+    <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md mx-auto">
+        <form method="POST" action="{% url 'add_income_expense' %}">
+            {% csrf_token %}
+            <input type="hidden" name="type" value="{{ type }}">
+            {{ form.as_p }}
+            <div class="flex justify-end gap-4">
+                <a href="{% url 'main' %}" class="text-gray-600 hover:text-gray-800">Cancel</a>
+                <button type="submit" name="{{ type }}" class="bg-{% if type == 'income' %}green{% else %}red{% endif %}-500 text-white px-4 py-2 rounded hover:bg-{% if type == 'income' %}green{% else %}red{% endif %}-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

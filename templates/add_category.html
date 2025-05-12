@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Add Category{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-bold text-{% if form_type == 'income' %}green-600{% else %}red-600{% endif %} mb-6">
+        Add {{ form_type|title }} Category
+    </h1>
+    <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md mx-auto">
+        <form method="POST" action="{% url 'add_category' %}">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="{{ form_type }}">
+            <div class="mb-4">
+                <label for="id_name" class="block text-gray-700 font-semibold mb-2">Category Name</label>
+                {{ form.name }}
+                {{ form.name.errors }}
+            </div>
+            <div class="flex justify-end gap-4">
+                <a href="{% url 'main' %}" class="text-gray-600 hover:text-gray-800">Cancel</a>
+                <button type="submit" class="bg-{% if form_type == 'income' %}green{% else %}red{% endif %}-500 text-white px-4 py-2 rounded hover:bg-{% if form_type == 'income' %}green{% else %}red{% endif %}-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.db import models
 
 class ExpenseCategory(models.Model):
     name = models.CharField(max_length=50)
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'expensecategory'
@@ -13,6 +14,7 @@ class ExpenseCategory(models.Model):
 
 class IncomeCategory(models.Model):
     name = models.CharField(max_length=50)
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'incomecategory'
@@ -31,7 +33,11 @@ class Account(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return f"{self.user.username} - {self.type} ({self.type_choice})"
+        try:
+            return f"{self.user.username} - {self.type} ({self.type_choice})"
+        except:
+            return f"Account {self.id} - {self.type} ({self.type_choice})"
+
 
 
 class Expense(models.Model):

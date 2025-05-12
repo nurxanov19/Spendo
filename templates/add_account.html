@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Add Account{% endblock %}
+{% block content %}
+<div class="container mx-auto px-4 py-6">
+    <h1 class="text-2xl font-bold text-blue-600 mb-6">Add Account</h1>
+    <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg max-w-md mx-auto">
+        <form method="POST" action="{% url 'add-account' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="flex justify-end gap-4">
+                <a href="{% url 'main' %}" class="text-gray-600 hover:text-gray-800">Cancel</a>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

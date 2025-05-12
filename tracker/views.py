@@ -11,56 +11,7 @@ from django.utils import timezone
 import json
 
 
-
-class AddCategory(View):
-    def get(self, request):
-        income_categories = IncomeCategory.objects.all()
-        expense_categories = ExpenseCategory.objects.all()
-        inc_form = AddIncomeCategoryForm()
-        exp_form = AddExpenseCategoryForm()
-        return render(request, 'main.html', {'inc_cat': income_categories, 'exp_cat': expense_categories,
-                                             'inc_form': inc_form,
-        'exp_form': exp_form})
-
-    def post(self, request):
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'income':
-            exp_form = AddExpenseCategoryForm(request.POST)
-            inc_form = AddIncomeCategoryForm(request.POST)
-            if inc_form.is_valid():
-                inc_form.save()
-                return redirect('main')
-        elif form_type == 'expense':
-            exp_form = AddExpenseCategoryForm(request.POST)
-            inc_form = AddIncomeCategoryForm(request.POST)
-            if exp_form.is_valid():
-                exp_form.save()
-                return redirect('main')
-
-        context = {'inc_form': inc_form, 'exp_form': exp_form}
-        return render(request, 'main.html', context)
-
-
-class AddAccount(View):
-    def get(self, request):
-        form = AddIncomeCategoryForm()
-        accounts = Account.object.filter(user=request.user)
-
-        return render(request, 'main.html', {'form': form, 'accounts': accounts})
-
-    def post(self, request):
-        form = AddAccountForm(request.POST)
-
-        if form.is_valid():
-            account = form.save(commit=False)
-            account.user = request.user
-            account.save()
-            return redirect('main')
-        return render(request, 'main.html', {'form': form})
-
-
-def get_context( request, extra_context=None):
+def get_context(request, extra_context=None):
     income = Income.objects.filter(user=request.user)
     expense = Expense.objects.filter(user=request.user)
 
@@ -75,22 +26,70 @@ def get_context( request, extra_context=None):
     for i in range(6):
         month_start = start_date + timedelta(days=30 * i)
         month_end = month_start + timedelta(days=30)
-        monthly_expense = Expense.objects.filter( user=request.user, created_at__gte=month_start,created_at__lt=month_end
-        ).aggregate(Sum('amount'))['amount__sum'] or 0
+        monthly_expense = \
+        Expense.objects.filter(user=request.user, created_at__gte=month_start, created_at__lt=month_end
+                               ).aggregate(Sum('amount'))['amount__sum'] or 0
 
         expense_data.append(float(monthly_expense) if monthly_expense else 0)
 
-    context = {'income': income, 'expense': expense, 'total_income': float(total_income), 'total_expense': float(total_expense),
-        'total_balance': float(total_balance), 'expense_data': expense_data, }
+    context = {'income': income, 'expense': expense, 'total_income': float(total_income),
+               'total_expense': float(total_expense),
+               'total_balance': float(total_balance), 'expense_data': expense_data, }
 
     if extra_context:
         context.update(extra_context)
     return context
 
 
-class ListIncomeExpenseView(View):
+class DashboardView(LoginRequiredMixin, View):
+    login_url = 'login'
+    redirect_field_name = 'main'
+
     def get(self, request):
-        return render(request, 'main.html', get_context( request))
+        context = get_context(request)
+        return render(request, 'dashboard.html', context)
+
+
+class AddCategory(View):
+    def get(self, request):
+        form_type = request.GET.get('type', 'income')
+        form = AddIncomeCategoryForm(user=request.user) if form_type == 'income' else AddExpenseCategoryForm(user=request.user)
+        return render(request, 'add_category.html', {'form': form, 'form_type': form_type})
+
+    def post(self, request):
+        form_type = request.POST.get('form_type')
+        form = AddIncomeCategoryForm(request.POST, user=request.user) if form_type == 'income' else AddExpenseCategoryForm(request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('main')
+        return render(request, 'add_category.html', {'form': form, 'form_type': form_type})
+
+
+class AddAccount(View):
+    def get(self, request):
+        form = AddAccountForm()
+        return render(request, 'add_account.html', {'form': form})
+
+    def post(self, request):
+        form = AddAccountForm(request.POST)
+
+        if form.is_valid():
+            account = form.save(commit=False)
+            account.user = request.user
+            account.save()
+
+            if account.balance > 0:
+                initial_category, _ = IncomeCategory.objects.get_or_create(name="Initial Balance", user=request.user)
+                Income.objects.create(
+                    user=request.user,
+                    account=account,
+                    amount=account.balance,
+                    type="Initial Balance",
+                    category=initial_category
+                )
+            return redirect('main')
+        return render(request, 'add_account.html', {'form': form})
+
 
 
 class AddIncomeExpenseView(LoginRequiredMixin, View):
@@ -98,31 +97,25 @@ class AddIncomeExpenseView(LoginRequiredMixin, View):
     redirect_field_name = 'main'
 
     def get(self, request):
-        context = get_context(request, {'income_form': AddIncomeForm(),
-            'expense_form': AddExpenseForm()})
-
-        return render(request, 'main.html', context)
+        type_param = request.GET.get('type', 'income')
+        form = AddIncomeForm(user=request.user) if type_param == 'income' else AddExpenseForm(user=request.user)
+        return render(request, 'add_income_expense.html', {'form': form, 'type': type_param})
 
     def post(self, request):
-        income_form = AddIncomeForm(request.POST)
-        expense_form = AddExpenseForm(request.POST)
-        if 'income' in request.POST and income_form.is_valid():
-            income = income_form.save(commit=False)
-            income.user = request.user
-            income.save()
+        type_param = request.POST.get('type')
+        form = AddIncomeForm(request.POST, user=request.user) if type_param == 'income' else AddExpenseForm(request.POST, user=request.user)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            if obj.account:
+                if isinstance(obj, Expense):
+                    obj.account.balance -= obj.amount
+                elif isinstance(obj, Income):
+                    obj.account.balance += obj.amount
+                obj.account.save()
             return redirect('main')
-        elif 'expense' in request.POST and expense_form.is_valid():
-            expense = expense_form.save(commit=False)
-            expense.user = request.user
-            expense.save()
-            return redirect('main')
-        context = get_context(request, {
-            'income_form': income_form,
-            'expense_form': expense_form,
-            'show_income_modal': 'income' in request.POST and not income_form.is_valid(),
-            'show_expense_modal': 'expense' in request.POST and not expense_form.is_valid(),
-        })
-        return render(request, 'main.html', context)
+        return render(request, 'add_income_expense.html', {'form': form, 'type': type_param})
 
 
 class ReportsView(LoginRequiredMixin, View):
@@ -170,7 +163,6 @@ class ReportsView(LoginRequiredMixin, View):
         return render(request, 'reports.html', context)
 
 
-
 '''
 -- aggregate() -> bu Djanog ORM metodi bo'lib, hisob-kitob amallarini bajaradi, masalan (sum, max, min, average), u doim dect obyekt qaytaradi
 -- SUM -> bu tegishli databaza malumotlarini berilgan field bo'yicha qo'shib chiqaradi  --> Income.objects.filter(user=request.user).aggregate(Sum('amount')) --> {'amount__sum': 500.00}
@@ -179,4 +171,5 @@ class ReportsView(LoginRequiredMixin, View):
     Bu yerda ishlatilayotgan logika oyalrni 180 ni 6 ga bo'ladi yani har bir oy uchun 30 kundan
 
 '''
+
 
