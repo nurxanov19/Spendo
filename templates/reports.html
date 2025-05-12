@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Reports{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Reports" %}{% endblock %}
 {% block content %}
 <div class="animate__animated animate__fadeIn">
-    <h1 class="text-3xl font-bold text-blue-600 mb-6">Reports</h1>
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">{% trans "Reports" %}</h1>
     <!-- Date Range Filter -->
     <div class="mb-6 flex space-x-4">
-        <button onclick="filterReports('7days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '7days' %}bg-blue-700{% endif %}">Last 7 Days</button>
-        <button onclick="filterReports('30days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '30days' %}bg-blue-700{% endif %}">Last 30 Days</button>
-        <button onclick="filterReports('90days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '90days' %}bg-blue-700{% endif %}">Last 90 Days</button>
+        <button onclick="filterReports('7days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '7days' %}bg-blue-700{% endif %}">{% trans "Last 7 Days" %}</button>
+        <button onclick="filterReports('30days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '30days' %}bg-blue-700{% endif %}">{% trans "Last 30 Days" %}</button>
+        <button onclick="filterReports('90days')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition transform hover:scale-105 {% if selected_range == '90days' %}bg-blue-700{% endif %}">{% trans "Last 90 Days" %}</button>
     </div>
     <!-- Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-blue-600 mb-4">Income vs Expenses (Bar)</h2>
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">{% trans "Income vs Expenses (Bar)" %}</h2>
             <canvas id="barChart"></canvas>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-blue-600 mb-4">Expense Breakdown (Pie)</h2>
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">{% trans "Expense Breakdown (Pie)" %}</h2>
             <canvas id="expensePieChart"></canvas>
         </div>
     </div>
 </div>
+
 
 <!-- Chart.js and Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

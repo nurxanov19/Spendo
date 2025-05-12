@@ -15,6 +15,8 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, Pa
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from tracker.models import Income, Expense
+from django.utils.translation import gettext_lazy as _
+
 
 
 
@@ -32,7 +34,7 @@ class RegisterView(View):
             user.backend = 'account.backends.EmailOrPhoneBackend'
 
             login(request, user)
-            messages.success(request, "You registered successfully")
+            messages.success(request, _("You registered successfully"))
             return redirect('main')
         return render(request, 'user/register.html', {'form': form})
 
@@ -62,7 +64,7 @@ class LoginView(View):
                 login(request, user)
                 return redirect('main')
             else:
-                form.add_error(None, "Invalid credentials (email/phone or password)")
+                form.add_error(None, _("Invalid credentials (email/phone or password)"))
 
         return render(request, 'user/login.html', {'form': form})
 
@@ -94,15 +96,15 @@ class ProfileView(View, LoginRequiredMixin):
     def post(self, request, username):
         user = get_object_or_404(CustomUser, username=username)
         if request.user != user:
-            messages.error(request, "You can only edit your own profile")
+            messages.error(request, _("You can only edit your own profile"))
             return redirect('main')
 
         form = ProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
-            messages.success(request, "Profile updated successfully!")
+            messages.success(request, _("Profile updated successfully!"))
         else:
-            messages.error(request, "Error updating profile. Please check the form.")
+            messages.error(request, _("Error updating profile. Please check the form."))
         return redirect('profile', username=user.username)
 
 
@@ -144,14 +146,14 @@ class CustomPasswordResetView(View):
                     reset_form = PasswordResetForm({'email': identifier})
                     if reset_form.is_valid():
                         reset_form.save(request=request)
-                        messages.success(request, 'Check your email, link sent')
+                        messages.success(request, _('Check your email, link sent'))
                         return redirect('password_reset_done')
                     else:
-                        messages.error(request, 'Issue with sending reset email')
+                        messages.error(request, _('Issue with sending reset email'))
                         return render(request, 'users/password_reset.html', {'form': form})
 
                 elif identifier.startswith('+998'):
-                    print('Phone number identified, sending SMS code to:', identifier)
+                    print(_('Phone number identified, sending SMS code to:'), identifier)
                     user = User.objects.get(phone=identifier)
 
                     uidb64 = urlsafe_base64_encode(str(user.pk).encode())
@@ -165,9 +167,9 @@ class CustomPasswordResetView(View):
                     return redirect('sms-code-verify')
 
                 else:
-                    messages.error(request, 'Enter a valid email or phone')
+                    messages.error(request, _('Enter a valid email or phone'))
             except User.DoesNotExist:
-                messages.error(request, 'User not found')
+                messages.error(request, _('User not found'))
 
         return render(request, 'users/password_reset.html', {'form': form})
 
@@ -190,9 +192,9 @@ class SMSCodeVerifyView(View):
 
                 return redirect('password_reset_confirm', uidb64=uidb64, token=token)
             else:
-                messages.error(request, 'Invalid token')
+                messages.error(request, _('Invalid token'))
         else:
-            messages.error(request, 'Invalid SMS code')
+            messages.error(request, _('Invalid SMS code'))
 
         return render(request, 'users/verify_code.html')
 

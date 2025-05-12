@@ -1,5 +1,6 @@
 from django import forms
 from .models import Income, Expense, IncomeCategory, ExpenseCategory, Account
+from django.utils.translation import gettext_lazy as _
 
 
 from django import forms
@@ -23,7 +24,7 @@ class AddIncomeForm(forms.ModelForm):
 class AddExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ['amount', 'account', 'category']
+        fields = [_('amount'), _('account'), _('category')]
         widgets = {
             'amount': forms.NumberInput(attrs={'placeholder': '$0.00'}),
         }
@@ -75,7 +76,7 @@ class AddAccountForm(forms.ModelForm):
         model = Account
         fields = ['type_choice', 'type', 'balance']
         widgets = {
-            'type_choice': forms.Select(attrs={'class': 'form-select'}),
-            'type': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Enter account name (ex: Humo, Cash wallet)'}),
-            'balance': forms.NumberInput(attrs={'class': 'form-input', 'placeholder': 'Initial balance'}),
+            _('type_choice'): forms.Select(attrs={'class': 'form-select'}),
+            _('type'): forms.TextInput(attrs={'class': 'form-input', 'placeholder': _('Enter account name (ex: Humo, Cash wallet)')}),
+            _('balance'): forms.NumberInput(attrs={'class': 'form-input', 'placeholder': _('Initial balance')}),
         }

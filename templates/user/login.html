@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Login{% endblock %}
 {% block content %}
 <!-- Animated Floating Coins Background -->
@@ -7,7 +8,7 @@
 <!-- Form Container -->
 <div class="animate__animated animate__fadeIn animate__slideInUp max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg mt-8">
     <h2 class="text-3xl font-bold text-blue-600 mb-6 text-center">
-        <i class="fas fa-sign-in-alt mr-2 text-green-500"></i> Login
+        <i class="fas fa-sign-in-alt mr-2 text-green-500"></i> {%trans "Login" %}
     </h2>
     <form method="POST" novalidate class="space-y-6">
         {% csrf_token %}
@@ -29,7 +30,7 @@
                 {{ field }}
             </div>
             {% if field.label == "Username" %}
-            <p class="text-sm text-gray-500 mt-1">Enter your email or phone number.</p>
+            <p class="text-sm text-gray-500 mt-1">{% trans "Enter your email or phone number" %}.</p>
             {% endif %}
             {% if field.errors %}
             <p class="text-red-500 text-sm mt-1">{{ field.errors.as_text }}</p>
@@ -39,13 +40,13 @@
         <!-- Submit Button -->
         <div>
             <button type="submit" class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 hover:scale-105 transition transform flex items-center justify-center">
-                <i class="fas fa-sign-in-alt mr-2"></i> Login
+                <i class="fas fa-sign-in-alt mr-2"></i> {%trans "Login" %}
             </button>
         </div>
     </form>
     <!-- Register Link -->
     <p class="text-center text-gray-600 mt-4">
-        Don't have an account? <a href="{% url 'register' %}" class="text-blue-500 hover:text-blue-700 hover:underline">Register</a>
+        {% trans "Don't have an account?"%} <a href="{% url 'register' %}" class="text-blue-500 hover:text-blue-700 hover:underline">{% trans "Register" %}</a>
     </p>
 </div>
 {% endblock %}

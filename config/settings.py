@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -114,7 +115,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+#LANGUAGE_CODE = 'en-us'
+
+
+# Language translation setup
+
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+]
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR , 'account/locale'),
+    os.path.join(BASE_DIR , 'tracker/locale')
+]
+
+
+LANGUAGE_COOKIE_NAME = 'django_language'
 
 TIME_ZONE = 'UTC'
 
@@ -155,3 +175,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'shoxjaxonnurxonov14@gmail.com'
 EMAIL_HOST_PASSWORD = 'cktmczbwgjrerwpa'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+

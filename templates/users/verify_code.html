@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
-  <h2>Enter Your Verification Code</h2>
+  <h2>{% trans "Enter Your Verification Code" %}</h2>
 
   <form method="post">
     {% csrf_token %}
-    <label for="sms_code">Enter the SMS code:</label>
+    <label for="sms_code">{% trans "Enter the SMS code:"%}</label>
     <input type="text" name="sms_code" id="sms_code" required>
-    <button type="submit">Verify</button>
+    <button type="submit">{% trans "Verify" %}</button>
 </form>
 
   {% if messages %}

@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
 {% block title %}Register{% endblock %}
 {% block content %}
 <!-- Animated Floating Coins Background -->
@@ -38,13 +41,13 @@
         <!-- Submit Button -->
         <div>
             <button type="submit" class="w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 hover:scale-105 transition transform flex items-center justify-center">
-                <i class="fas fa-sign-in-alt mr-2"></i> Register
+                <i class="fas fa-sign-in-alt mr-2"></i> {% trans "Register"%}
             </button>
         </div>
     </form>
     <!-- Login Link -->
     <p class="text-center text-gray-600 mt-4">
-        Already have an account? <a href="{% url 'login' %}" class="text-blue-500 hover:text-blue-700 hover:underline">Log in</a>
+        {% trans "Already have an account?" %} <a href="{% url 'login' %}" class="text-blue-500 hover:text-blue-700 hover:underline">{% trans "Log in"%}</a>
     </p>
 </div>
 {% endblock %}

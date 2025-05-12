@@ -1,0 +1,217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-12 20:56+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: templates/base.html:28
+msgid "Spendo"
+msgstr "Spendo"
+
+#: templates/base.html:30
+msgid "Home"
+msgstr "Asosiy"
+
+#: templates/base.html:32 templates/profile.html:4 templates/profile.html:9
+msgid "Profile"
+msgstr "Profilingiz"
+
+#: templates/base.html:33 templates/reports.html:4 templates/reports.html:7
+msgid "Reports"
+msgstr "Hisobotlar"
+
+#: templates/dashboard.html:4 templates/dashboard.html:10
+msgid "Dashboard"
+msgstr "Dashbord"
+
+#: templates/dashboard.html:15
+msgid "Total Balance"
+msgstr "Umumiy balans"
+
+#: templates/dashboard.html:19 templates/profile.html:55
+msgid "Income"
+msgstr "Daromad"
+
+#: templates/dashboard.html:23
+msgid "Expenses"
+msgstr "Chiqim"
+
+#: templates/dashboard.html:31
+msgid "Add Income"
+msgstr "Daromad qo'shish"
+
+#: templates/dashboard.html:34
+msgid "Add Expense"
+msgstr "Chiqim qo'shish"
+
+#: templates/dashboard.html:37
+msgid "Add Account"
+msgstr "Hisob qo'shish"
+
+#: templates/dashboard.html:40
+msgid "Add Income Category"
+msgstr "Daromad kategoriyasini qo'shish"
+
+#: templates/dashboard.html:43
+msgid "Add Expense Category"
+msgstr "Chiqim kategoriyasini qo'shish"
+
+#: templates/dashboard.html:50
+msgid "Recent Income"
+msgstr "Oxirgi daromadlar"
+
+#: templates/dashboard.html:58
+msgid "No income recorded"
+msgstr "Hech qanday daromad mavjud emas"
+
+#: templates/dashboard.html:63
+msgid "Recent Expenses"
+msgstr "Oxirgi chiqimlar"
+
+#: templates/dashboard.html:71
+msgid "No expenses recorded"
+msgstr "Hech qanday chiqim mavjud emas"
+
+#: templates/dashboard.html:80
+msgid "Monthly Expenses"
+msgstr "Oylik chiqimlar"
+
+#: templates/dashboard.html:84
+msgid "Income vs Expenses"
+msgstr "Daromad va chiqimlar"
+
+#: templates/profile.html:31 templates/profile.html:71
+msgid "Edit Profile"
+msgstr "Profilni tahrirlash"
+
+#: templates/profile.html:36
+msgid "Logout"
+msgstr "Chiqish"
+
+#: templates/profile.html:42
+msgid "Password Reset"
+msgstr "Parolni tiklash"
+
+#: templates/profile.html:50
+msgid "Recent Activity"
+msgstr "Oxirgi faoliyat"
+
+#: templates/profile.html:58
+msgid "Expense"
+msgstr "Chiqim"
+
+#: templates/profile.html:63
+msgid "No recent activity"
+msgstr "Oxirgi faoliyat mavjud emas"
+
+#: templates/profile.html:75
+msgid "Identifier (Email or Phone)"
+msgstr "Identifikator (Email yoki telefon)"
+
+#: templates/profile.html:79
+msgid "Avatar"
+msgstr "Avatar"
+
+#: templates/profile.html:83 templates/users/password_reset.html:17
+msgid "Cancel"
+msgstr "Bekor qilish"
+
+#: templates/profile.html:84
+msgid "Save"
+msgstr "Saqlash"
+
+#: templates/reports.html:10
+msgid "Last 7 Days"
+msgstr "Oxirgi 7 kun"
+
+#: templates/reports.html:11
+msgid "Last 30 Days"
+msgstr "Oxirgi 30 kun"
+
+#: templates/reports.html:12
+msgid "Last 90 Days"
+msgstr "Oxirgi 90 kun"
+
+#: templates/reports.html:17
+msgid "Income vs Expenses (Bar)"
+msgstr "Daromad va chiqimlar (ustunli)"
+
+#: templates/reports.html:21
+msgid "Expense Breakdown (Pie)"
+msgstr "Chiqimlar taqsimoti (doira)"
+
+#: templates/user/login.html:10 templates/user/login.html:42
+#: templates/users/password_reset_complete.html:16
+msgid "Login"
+msgstr "Kirish"
+
+#: templates/user/login.html:32
+msgid "Enter your email or phone number"
+msgstr "Email yoki telefon raqamingizni kiriting"
+
+#: templates/user/login.html:48 templates/user/register.html:41
+msgid "Register"
+msgstr "Ro'yxatdan o'tish"
+
+#: templates/user/register.html:47
+msgid "Log in"
+msgstr "Kirish"
+
+#: templates/users/password_reset.html:7
+#: templates/users/password_reset_complete.html:18
+#: templates/users/password_reset_confirm.html:20
+#: templates/users/password_reset_done.html:6
+msgid "Reset Password"
+msgstr "Parolni tiklash"
+
+#: templates/users/password_reset_complete.html:7
+msgid "Log in to your account"
+msgstr "Hisobingizga kiring"
+
+#: templates/users/password_reset_complete.html:18
+msgid "Forgot your password:"
+msgstr "Parolingizni unutingizmi:"
+
+#: templates/users/password_reset_complete.html:19
+msgid "Don't have a account?"
+msgstr "Hisobingiz yo'qmi?"
+
+#: templates/users/password_reset_complete.html:19
+msgid "Join Now"
+msgstr "Hozir qo'shiling"
+
+#: templates/users/password_reset_confirm.html:8
+msgid "Password Reset Confirm"
+msgstr "Parolni tiklash tasdiqlash"
+
+#: templates/users/password_reset_done.html:7
+msgid ""
+"Please check your inbox and follow the instruction to reset your password"
+msgstr ""
+"Iltimos, pochta qutingizni tekshiring va parolni tiklash uchun ko'rsatmalarga amal qiling"
+
+#: templates/users/verify_code.html:4
+msgid "Enter Your Verification Code"
+msgstr "Tasdiqlash kodingizni kiriting"
+
+#: templates/users/verify_code.html:8
+msgid "Enter the SMS code:"
+msgstr "SMS kodini kiriting:"
+
+#: templates/users/verify_code.html:10
+msgid "Verify"
+msgstr "Tasdiqlash"

@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-12 20:56+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+#: account/froms.py:12 account/froms.py:53 account/froms.py:69
+#: account/froms.py:92
+msgid "Email or Phone"
+msgstr ""
+
+#: account/froms.py:13
+msgid "Confirm Password"
+msgstr ""
+
+#: account/froms.py:29
+msgid "Password and password2 is not ...., Retry"
+msgstr ""
+
+#: account/froms.py:32
+msgid "You must provide either email or phone"
+msgstr ""
+
+#: account/views.py:37
+msgid "You registered successfully"
+msgstr ""
+
+#: account/views.py:67
+msgid "Invalid credentials (email/phone or password)"
+msgstr ""
+
+#: account/views.py:99
+msgid "You can only edit your own profile"
+msgstr ""
+
+#: account/views.py:105
+msgid "Profile updated successfully!"
+msgstr ""
+
+#: account/views.py:107
+msgid "Error updating profile. Please check the form."
+msgstr ""
+
+#: account/views.py:149
+msgid "Check your email, link sent"
+msgstr ""
+
+#: account/views.py:152
+msgid "Issue with sending reset email"
+msgstr ""
+
+#: account/views.py:156
+msgid "Phone number identified, sending SMS code to:"
+msgstr ""
+
+#: account/views.py:170
+msgid "Enter a valid email or phone"
+msgstr ""
+
+#: account/views.py:172
+msgid "User not found"
+msgstr ""
+
+#: account/views.py:195
+msgid "Invalid token"
+msgstr ""
+
+#: account/views.py:197
+msgid "Invalid SMS code"
+msgstr ""

@@ -1,10 +1,13 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker - {% block title %}{% endblock %}</title>
+    <title>Spendo - {% block title %}{% endblock %}</title>
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
@@ -20,19 +23,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="font-poppins bg-gray-100 relative overflow-x-hidden">
+
+<p class="text-sm text-red-500 p-2">Current language: {{ LANGUAGE_CODE }}</p>
+
     <!-- Navigation -->
     <nav class="bg-blue-600 text-white p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold">Expense Tracker</a>
-            <div class="space-x-4">
-                <a href="{% url 'main' %}" class="hover:text-yellow-300 transition">Home</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'profile' request.user.username %}" class="hover:text-yellow-300 transition">Profile</a>
-                <a href="{% url 'reports' %}" class="hover:text-yellow-300 transition">Reports</a>
-                {% endif %}
-            </div>
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-2xl font-bold">{% trans "Spendo" %}</a>
+        <div class="space-x-4">
+
+            <div class="inline-block relative ml-4">
+            <select id="languageSwitcher"
+                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 focus:outline-none">
+                <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>Uz</option>
+                <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Ru</option>
+                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>Eng</option>
+            </select>
         </div>
-    </nav>
+
+        <script>
+            document.getElementById('languageSwitcher').addEventListener('change', function () {
+                const selectedLang = this.value;
+                window.location.href = `/switch-language/${selectedLang}/`;
+            });
+        </script>
+
+
+
+            <a href="{% url 'main' %}" class="hover:text-yellow-300 transition">{% trans "Home" %}</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' request.user.username %}" class="hover:text-yellow-300 transition">{% trans "Profile" %}</a>
+                <a href="{% url 'reports' %}" class="hover:text-yellow-300 transition">{% trans "Reports" %}</a>
+            {% endif %}
+
+
+
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</nav>
     <!-- Main Content -->
     <div class="container mx-auto p-6">
         {% block content %}

@@ -4,11 +4,13 @@ from .models import CustomUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
+from django.utils.translation import gettext_lazy as _
+
 
 
 class RegisterForm(forms.ModelForm):
-    identifier = forms.CharField(label="Email or Phone")
-    password2 = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirm Password")
+    identifier = forms.CharField(label=_("Email or Phone"))
+    password2 = forms.CharField(widget=forms.PasswordInput, required=True, label=_("Confirm Password"))
 
     class Meta:
         model = CustomUser
@@ -24,10 +26,10 @@ class RegisterForm(forms.ModelForm):
         password2 = cleaned_data.get('password2')
 
         if password2 and password and password != password2:
-            raise ValidationError('Password and password2 is not ...., Retry')
+            raise ValidationError(_('Password and password2 is not ...., Retry'))
 
         if not identifier:
-            raise ValidationError('You must provide either email or phone')
+            raise ValidationError(_('You must provide either email or phone'))
 
         return cleaned_data
 
@@ -48,7 +50,7 @@ class RegisterForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    identifier = forms.CharField(max_length=100, label="Email or Phone")
+    identifier = forms.CharField(max_length=100, label=_("Email or Phone"))
     password = forms.CharField(widget=forms.PasswordInput)
 
     def clean(self):
@@ -64,7 +66,7 @@ class LoginForm(forms.Form):
 
 
 class ProfileForm(forms.ModelForm):
-    identifier = forms.CharField(max_length=100, label="Email or Phone")
+    identifier = forms.CharField(max_length=100, label=_("Email or Phone"))
 
     class Meta:
         model = CustomUser
@@ -87,5 +89,5 @@ class ProfileForm(forms.ModelForm):
 
 
 class CustomPasswordResetForm(forms.Form):
-    identifier = forms.CharField(label="Email or Phone", max_length=100)
+    identifier = forms.CharField(label=_("Email or Phone"), max_length=100)
 

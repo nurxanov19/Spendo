@@ -1,25 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Dashboard{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Dashboard" %}{% endblock %}
 {% block content %}
 <!-- Animated Floating Coins Background -->
 <div class="floating-coins fixed inset-0 -z-10"></div>
 <!-- Page Content -->
 <div class="container mx-auto px-4 py-6 relative z-10">
-    <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">Dashboard</h1>
+    <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">{% trans "Dashboard" %}</h1>
 
     <!-- Account Balances -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-            <h2 class="text-lg font-semibold text-green-600"><i class="fas fa-wallet mr-2"></i> Total Balance</h2>
+            <h2 class="text-lg font-semibold text-green-600"><i class="fas fa-wallet mr-2"></i> {% trans "Total Balance" %}</h2>
             <p class="text-2xl font-bold text-gray-800">${{ total_balance|floatformat:2 }}</p>
         </div>
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-            <h2 class="text-lg font-semibold text-blue-600"><i class="fas fa-arrow-up mr-2"></i> Income</h2>
+            <h2 class="text-lg font-semibold text-blue-600"><i class="fas fa-arrow-up mr-2"></i> {% trans "Income" %}</h2>
             <p class="text-2xl font-bold text-gray-800">${{ total_income|floatformat:2 }}</p>
         </div>
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-            <h2 class="text-lg font-semibold text-red-600"><i class="fas fa-arrow-down mr-2"></i> Expenses</h2>
+            <h2 class="text-lg font-semibold text-red-600"><i class="fas fa-arrow-down mr-2"></i> {% trans "Expenses" %}</h2>
             <p class="text-2xl font-bold text-gray-800">${{ total_expense|floatformat:2 }}</p>
         </div>
     </div>
@@ -27,26 +28,26 @@
     <!-- Quick Actions -->
     <div class="flex flex-wrap justify-center gap-4 mb-6">
         <a href="{% url 'add_income_expense' %}?type=income" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition transform hover:scale-105 text-lg font-semibold">
-            <i class="fas fa-plus mr-2"></i> Add Income
+            <i class="fas fa-plus mr-2"></i> {% trans "Add Income" %}
         </a>
         <a href="{% url 'add_income_expense' %}?type=expense" class="bg-red-600 text-white px-8 py-3 rounded-lg hover:bg-red-700 transition transform hover:scale-105 text-lg font-semibold">
-            <i class="fas fa-plus mr-2"></i> Add Expense
+            <i class="fas fa-plus mr-2"></i> {% trans "Add Expense" %}
         </a>
         <a href="{% url 'add-account' %}" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition transform hover:scale-105">
-            <i class="fas fa-plus mr-2"></i> Add Account
+            <i class="fas fa-plus mr-2"></i> {% trans "Add Account" %}
         </a>
         <a href="{% url 'add_category' %}?type=income" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition transform hover:scale-105">
-            <i class="fas fa-plus mr-2"></i> Add Income Category
+            <i class="fas fa-plus mr-2"></i> {% trans "Add Income Category" %}
         </a>
         <a href="{% url 'add_category' %}?type=expense" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition transform hover:scale-105">
-            <i class="fas fa-plus mr-2"></i> Add Expense Category
+            <i class="fas fa-plus mr-2"></i> {% trans "Add Expense Category" %}
         </a>
     </div>
 
     <!-- Income and Expense Lists -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-blue-600 mb-4">Recent Income</h2>
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">{% trans "Recent Income" %}</h2>
             <ul class="space-y-2">
                 {% for inc in income %}
                 <li class="flex justify-between">
@@ -54,12 +55,12 @@
                     <span class="text-green-600">${{ inc.amount|floatformat:2 }}</span>
                 </li>
                 {% empty %}
-                <li class="text-gray-500">No income recorded</li>
+                <li class="text-gray-500">{% trans "No income recorded" %}</li>
                 {% endfor %}
             </ul>
         </div>
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-red-600 mb-4">Recent Expenses</h2>
+            <h2 class="text-lg font-semibold text-red-600 mb-4">{% trans "Recent Expenses" %}</h2>
             <ul class="space-y-2">
                 {% for exp in expense %}
                 <li class="flex justify-between">
@@ -67,7 +68,7 @@
                     <span class="text-red-600">${{ exp.amount|floatformat:2 }}</span>
                 </li>
                 {% empty %}
-                <li class="text-gray-500">No expenses recorded</li>
+                <li class="text-gray-500">{% trans "No expenses recorded" %}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -76,11 +77,11 @@
     <!-- Charts -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-blue-600 mb-4">Monthly Expenses</h2>
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">{% trans "Monthly Expenses" %}</h2>
             <canvas id="expenseChart"></canvas>
         </div>
         <div class="bg-white bg-opacity-90 p-6 rounded-lg shadow-lg">
-            <h2 class="text-lg font-semibold text-blue-600 mb-4">Income vs Expenses</h2>
+            <h2 class="text-lg font-semibold text-blue-600 mb-4">{% trans "Income vs Expenses" %}</h2>
             <canvas id="pieChart"></canvas>
         </div>
     </div>

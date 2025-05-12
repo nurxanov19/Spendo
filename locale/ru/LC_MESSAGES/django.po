@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-12 20:56+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: templates/base.html:28
+msgid "Spendo"
+msgstr "Spendo"
+
+#: templates/base.html:30
+msgid "Home"
+msgstr "Главная"
+
+#: templates/base.html:32 templates/profile.html:4 templates/profile.html:9
+msgid "Profile"
+msgstr "Профиль"
+
+#: templates/base.html:33 templates/reports.html:4 templates/reports.html:7
+msgid "Reports"
+msgstr "Отчёты"
+
+#: templates/dashboard.html:4 templates/dashboard.html:10
+msgid "Dashboard"
+msgstr "Панель управления"
+
+#: templates/dashboard.html:15
+msgid "Total Balance"
+msgstr "Общий баланс"
+
+#: templates/dashboard.html:19 templates/profile.html:55
+msgid "Income"
+msgstr "Доход"
+
+#: templates/dashboard.html:23
+msgid "Expenses"
+msgstr "Расходы"
+
+#: templates/dashboard.html:31
+msgid "Add Income"
+msgstr "Добавить доход"
+
+#: templates/dashboard.html:34
+msgid "Add Expense"
+msgstr "Добавить расход"
+
+#: templates/dashboard.html:37
+msgid "Add Account"
+msgstr "Добавить счёт"
+
+#: templates/dashboard.html:40
+msgid "Add Income Category"
+msgstr "Добавить категорию дохода"
+
+#: templates/dashboard.html:43
+msgid "Add Expense Category"
+msgstr "Добавить категорию расхода"
+
+#: templates/dashboard.html:50
+msgid "Recent Income"
+msgstr "Недавние доходы"
+
+#: templates/dashboard.html:58
+msgid "No income recorded"
+msgstr "Доходы не записаны"
+
+#: templates/dashboard.html:63
+msgid "Recent Expenses"
+msgstr "Недавние расходы"
+
+#: templates/dashboard.html:71
+msgid "No expenses recorded"
+msgstr "Расходы не записаны"
+
+#: templates/dashboard.html:80
+msgid "Monthly Expenses"
+msgstr "Месячные расходы"
+
+#: templates/dashboard.html:84
+msgid "Income vs Expenses"
+msgstr "Доходы против расходов"
+
+#: templates/profile.html:31 templates/profile.html:71
+msgid "Edit Profile"
+msgstr "Редактировать профиль"
+
+#: templates/profile.html:36
+msgid "Logout"
+msgstr "Выйти"
+
+#: templates/profile.html:42
+msgid "Password Reset"
+msgstr "Сброс пароля"
+
+#: templates/profile.html:50
+msgid "Recent Activity"
+msgstr "Недавняя активность"
+
+#: templates/profile.html:58
+msgid "Expense"
+msgstr "Расход"
+
+#: templates/profile.html:63
+msgid "No recent activity"
+msgstr "Нет недавней активности"
+
+#: templates/profile.html:75
+msgid "Identifier (Email or Phone)"
+msgstr "Идентификатор (email или телефон)"
+
+#: templates/profile.html:79
+msgid "Avatar"
+msgstr "Аватар"
+
+#: templates/profile.html:83 templates/users/password_reset.html:17
+msgid "Cancel"
+msgstr "Отмена"
+
+#: templates/profile.html:84
+msgid "Save"
+msgstr "Сохранить"
+
+#: templates/reports.html:10
+msgid "Last 7 Days"
+msgstr "Последние 7 дней"
+
+#: templates/reports.html:11
+msgid "Last 30 Days"
+msgstr "Последние 30 дней"
+
+#: templates/reports.html:12
+msgid "Last 90 Days"
+msgstr "Последние 90 дней"
+
+#: templates/reports.html:17
+msgid "Income vs Expenses (Bar)"
+msgstr "Доходы против расходов (столбцы)"
+
+#: templates/reports.html:21
+msgid "Expense Breakdown (Pie)"
+msgstr "Распределение расходов (круговая)"
+
+#: templates/user/login.html:10 templates/user/login.html:42
+#: templates/users/password_reset_complete.html:16
+msgid "Login"
+msgstr "Войти"
+
+#: templates/user/login.html:32
+msgid "Enter your email or phone number"
+msgstr "Введите ваш email или номер телефона"
+
+#: templates/user/login.html:48 templates/user/register.html:41
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: templates/user/register.html:47
+msgid "Log in"
+msgstr "Войти"
+
+#: templates/users/password_reset.html:7
+#: templates/users/password_reset_complete.html:18
+#: templates/users/password_reset_confirm.html:20
+#: templates/users/password_reset_done.html:6
+msgid "Reset Password"
+msgstr "Сбросить пароль"
+
+#: templates/users/password_reset_complete.html:7
+msgid "Log in to your account"
+msgstr "Войдите в свой аккаунт"
+
+#: templates/users/password_reset_complete.html:18
+msgid "Forgot your password:"
+msgstr "Забыли пароль:"
+
+#: templates/users/password_reset_complete.html:19
+msgid "Don't have a account?"
+msgstr "Нет аккаунта?"
+
+#: templates/users/password_reset_complete.html:19
+msgid "Join Now"
+msgstr "Присоединяйтесь сейчас"
+
+#: templates/users/password_reset_confirm.html:8
+msgid "Password Reset Confirm"
+msgstr "Подтверждение сброса пароля"
+
+#: templates/users/password_reset_done.html:7
+msgid ""
+"Please check your inbox and follow the instruction to reset your password"
+msgstr ""
+"Пожалуйста, проверьте ваш почтовый ящик и следуйте инструкциям для сброса пароля"
+
+#: templates/users/verify_code.html:4
+msgid "Enter Your Verification Code"
+msgstr "Введите ваш код подтверждения"
+
+#: templates/users/verify_code.html:8
+msgid "Enter the SMS code:"
+msgstr "Введите SMS-код:"
+
+#: templates/users/verify_code.html:10
+msgid "Verify"
+msgstr "Подтвердить"
