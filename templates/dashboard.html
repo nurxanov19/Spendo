@@ -89,19 +89,33 @@
 
 <!-- JSON Data -->
 {{ expense_data|json_script:"expense-data" }}
+<script id="pie-labels" type="application/json">
+{
+  "income_label": "{% trans 'Income' %}",
+  "expenses_label": "{% trans 'Expenses' %}"
+}
+</script>
 
 <!-- Chart.js Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // Get expense data from JSON script
+    // Get expense data and pie labels
     const expenseDataRaw = JSON.parse(document.getElementById('expense-data').textContent);
+    const pieLabelsData = JSON.parse(document.getElementById('pie-labels').textContent);
+
+    // Define pie labels
+    const pieLabels = [pieLabelsData.income_label, pieLabelsData.expenses_label];
+
+    // Debug: Log the pie labels and data
+    console.log('Pie Labels:', pieLabels);
+    console.log('Pie Data:', [{{ total_income }}, {{ total_expense }}]);
 
     // Chart Data
     const expenseData = {
         labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
         datasets: [{
-            label: 'Expenses',
+            label: '{% trans "Expenses" %}',
             data: expenseDataRaw,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
@@ -110,11 +124,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const pieData = {
-        labels: ['Income', 'Expenses'],
+        labels: pieLabels,
         datasets: [{
             data: [{{ total_income }}, {{ total_expense }}],
-            backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.2)', // Blue for Income
+                'rgba(255, 99, 132, 0.2)'  // Red for Expenses
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',   // Blue border for Income
+                'rgba(255, 99, 132, 1)'    // Red border for Expenses
+            ],
             borderWidth: 1
         }]
     };
@@ -137,7 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'pie',
         data: pieData,
         options: {
-            responsive: true
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
         }
     });
 });
