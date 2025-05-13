@@ -13,6 +13,11 @@ class AddIncomeForm(forms.ModelForm):
         widgets = {
             'amount': forms.NumberInput(attrs={'placeholder': '$0.00'}),
         }
+        labels = {
+            'amount': _('amount'),
+            'account': _('account'),
+            'category': _('category'),
+        }
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
@@ -24,9 +29,14 @@ class AddIncomeForm(forms.ModelForm):
 class AddExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = [_('amount'), _('account'), _('category')]
+        fields = ['amount', 'account', 'category']
         widgets = {
             'amount': forms.NumberInput(attrs={'placeholder': '$0.00'}),
+        }
+        labels = {
+            'amount': _('amount'),
+            'account': _('account'),
+            'category': _('category'),
         }
 
     def __init__(self, *args, **kwargs):

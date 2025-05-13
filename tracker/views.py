@@ -164,22 +164,6 @@ class ReportsView(LoginRequiredMixin, View):
 
 
 
-from django.utils import translation
-from django.conf import settings
-from django.http import HttpResponseRedirect
-
-def switch_language(request, language_code):
-    translation.activate(language_code)
-    request.session[settings.LANGUAGE_COOKIE_NAME] = language_code
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-
-
-
-
-
-
-
-
 '''
 -- aggregate() -> bu Djanog ORM metodi bo'lib, hisob-kitob amallarini bajaradi, masalan (sum, max, min, average), u doim dect obyekt qaytaradi
 -- SUM -> bu tegishli databaza malumotlarini berilgan field bo'yicha qo'shib chiqaradi  --> Income.objects.filter(user=request.user).aggregate(Sum('amount')) --> {'amount__sum': 500.00}

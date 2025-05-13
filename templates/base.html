@@ -3,77 +3,53 @@
 {% get_current_language as LANGUAGE_CODE %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spendo - {% block title %}{% endblock %}</title>
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-
-    <!-- Chart.js for charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="font-poppins bg-gray-100 relative overflow-x-hidden">
 
+<!-- Debug Output -->
 <p class="text-sm text-red-500 p-2">Current language: {{ LANGUAGE_CODE }}</p>
 
-    <!-- Navigation -->
-    <nav class="bg-blue-600 text-white p-4 shadow-md">
+<!-- Navigation -->
+<nav class="bg-blue-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/" class="text-2xl font-bold">{% trans "Spendo" %}</a>
-        <div class="space-x-4">
-
-            <div class="inline-block relative ml-4">
-            <select id="languageSwitcher"
-                class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 focus:outline-none">
-                <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>Uz</option>
-                <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Ru</option>
-                <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>Eng</option>
-            </select>
-        </div>
-
-        <script>
-            document.getElementById('languageSwitcher').addEventListener('change', function () {
-                const selectedLang = this.value;
-                window.location.href = `/switch-language/${selectedLang}/`;
-            });
-        </script>
-
-
-
+        <div class="flex items-center space-x-4">
             <a href="{% url 'main' %}" class="hover:text-yellow-300 transition">{% trans "Home" %}</a>
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' request.user.username %}" class="hover:text-yellow-300 transition">{% trans "Profile" %}</a>
                 <a href="{% url 'reports' %}" class="hover:text-yellow-300 transition">{% trans "Reports" %}</a>
             {% endif %}
-
-
-
-
-
-
-
-            </div>
-
-
+            <form action="/i18n/setlang/" method="post" class="inline">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit();" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 focus:outline-none">
+                    <option value="uz" {% if LANGUAGE_CODE == 'uz' %}selected{% endif %}>Uz</option>
+                    <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Ru</option>
+                    <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>En</option>
+                </select>
+            </form>
         </div>
     </div>
 </nav>
-    <!-- Main Content -->
-    <div class="container mx-auto p-6">
-        {% block content %}
-        {% endblock %}
-    </div>
-    <!-- Custom JS -->
-    <script src="{% static 'js/script.js' %}"></script>
+
+<!-- Main Content -->
+<div class="container mx-auto p-6">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
