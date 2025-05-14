@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 from django.utils.http import urlsafe_base64_encode
-
+import random
 from .models import CustomUser
 from .froms import RegisterForm, LoginForm, ProfileForm, CustomPasswordResetForm
 from django.views import View
@@ -16,7 +16,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from tracker.models import Income, Expense
 from django.utils.translation import gettext_lazy as _
-
 
 
 
@@ -103,7 +102,7 @@ class ProfileView(View, LoginRequiredMixin):
             form.save()
             messages.success(request, _("Profile updated successfully!"))
         else:
-            messages.error(request, _("Error updating profile. Please check the form."))
+            messages.error(request, _("Error updating profile"))
         return redirect('profile', username=user.username)
 
 
@@ -112,8 +111,6 @@ class ProfileView(View, LoginRequiredMixin):
 #     success_url = reverse_lazy('users:password-change-done')
 #     template_name = 'users/password_change_form.html'
 
-
-import random
 
 def send_sms_code_to_phone(phone):
     code = str(random.randint(100000, 999999))

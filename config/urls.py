@@ -17,17 +17,66 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework.authentication import TokenAuthentication
+
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Full API",
+      default_version='v1',
+      description="Spendo API project",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="shoxjaxonnurxonov5@gmail.com"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+
+
+)
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'description': "Token-based authentication. Example: 'Token 123456abcdef'"
+        }
+    },
+'USE_SESSION_AUTH': False,
+'DOC_EXPANSION': 'none',
+    'DEFAULT_MODEL_RENDERING': 'model',
+    'DEFAULT_MODEL_DEPTH': 3,
+}
+
+
 
 urlpatterns = [
+   path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+   path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
+
+
+
+urlpatterns += [
     path('i18n/', include('django.conf.urls.i18n')),
+    path('api/', include('account.api.urls'))
+
 ]
 
 
 urlpatterns += i18n_patterns(
-path('', include('tracker.urls')),
-    path('admin/', admin.site.urls),
+    path('', include('tracker.urls')),
+        path('admin/', admin.site.urls),
 
         path('account/', include('account.urls')),
               )

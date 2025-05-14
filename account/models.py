@@ -25,5 +25,28 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+class OneTimePasswordModel(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    email = models.EmailField(blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    key = models.CharField(max_length=200)
+    is_expired = models.BooleanField(default=False)
+    is_confirmed = models.BooleanField(default=False)
+    tried = models.PositiveIntegerField(default=0)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        if not self.email and not self.phone:
+            raise ValidationError("Either phone or email must be provided.")
+        if self.email and self.phone:
+            raise ValidationError("Only one of phone or email should be provided.")
+
+    def save(self, *args, **kwargs):
+        if self.tried > 3:
+            self.is_expired = True
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"OTP for {self.email or self.phone} - Expired: {self.is_expired}"
 

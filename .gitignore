@@ -35,6 +35,7 @@ media
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
+.idea
 
 # File-based project format
 *.iws
@@ -99,9 +100,9 @@ celerybeat-schedule.*
 
 # Environments
 .env
-.venv
+.env
 env/
-venv/
+.env/
 ENV/
 env.bak/
 venv.bak/

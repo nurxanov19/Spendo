@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import RegisterView, LoginView, LogoutView, ProfileView, CustomPasswordResetView, SMSCodeVerifyView, \
     PasswordResetCompleteView
 
@@ -22,6 +22,7 @@ urlpatterns = [
 
     path('sms-code-verify/', SMSCodeVerifyView.as_view(), name='sms-code-verify'),
     path('password-reset-complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    #path('api', Main.as_view())
 ]
 
 
