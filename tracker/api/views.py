@@ -53,7 +53,7 @@ class AddCategoryApi(APIView):
         serializer = serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return Response({'message': f'{form_type.capitalize()} category created ({request.data.get('name')})'},
+            return Response({'message': ' category created '},
                             status=status.HTTP_201_CREATED)
         return Response({'error': serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
@@ -77,7 +77,7 @@ class AddAccountApi(APIView):
                 initial_category, _ = IncomeCategory.objects.get_or_create(name="Initial Balance", user=request.user)
                 Income.objects.create(user=request.user, account=account,
                                       amount=account.balance, type="Initial Balance", category=initial_category)
-            return Response({'message': f'Account created ({request.data['type']})'},status=status.HTTP_201_CREATED)
+            return Response({'message': f'Account created '},status=status.HTTP_201_CREATED)
         return Response({'error': serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -97,7 +97,7 @@ class AddIncomeExpenseApi(APIView):
                 elif isinstance(obj, Income):
                     obj.account.balance += obj.amount
                 obj.account.save()
-            return Response({'message': f'{type_param.capitalize()} added'},status=status.HTTP_201_CREATED)
+            return Response({'message': f'{type_param} added'},status=status.HTTP_201_CREATED)
         return Response({'error': serializer.errors},status=status.HTTP_400_BAD_REQUEST)
 
 
