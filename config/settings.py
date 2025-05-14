@@ -33,12 +33,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'spendo.uz',
-    'www.spendo.uz',
-    'spendo.onrender.com'
+
 ]
 
-
+# 'spendo.uz',
+#     'www.spendo.uz',
+#     'spendo.onrender.com'
 
 # Application definition
 
