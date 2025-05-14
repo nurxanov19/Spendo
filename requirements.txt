@@ -12,3 +12,4 @@ pytz
 PyYAML
 uritemplate
 whitenoise
+psycopg2
